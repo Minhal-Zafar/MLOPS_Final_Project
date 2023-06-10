@@ -17,8 +17,7 @@ jobs:
 
       - name: Build and test code
         run: |
-          # Add your build and test commands here
-          # For example, npm install && npm test
+          python -m pytest tests/
 
       - name: Merge into main
         if: ${{ success() }}
