@@ -20,7 +20,7 @@ jobs:
           # Add your build and test commands here
           # For example, npm install && npm test
 
-      - name: Merge into master
+      - name: Merge into main
         if: ${{ success() }}
         uses: octokit/request-action@v2.x
         with:
@@ -29,7 +29,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           body: |
             {
-              "base": "master",
+              "base": "main",
               "head": "${{ github.ref }}",
               "commit_message": "Automatically merging successful build"
             }
