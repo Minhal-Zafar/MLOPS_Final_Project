@@ -1,0 +1,35 @@
+name: Auto Merge Workflow
+
+on:
+  push:
+    branches:
+      - minhal
+      - hammas
+      - abeeha
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build and test code
+        run: |
+          # Add your build and test commands here
+          # For example, npm install && npm test
+
+      - name: Merge into master
+        if: ${{ success() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/${{ github.repository }}/merges
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            {
+              "base": "master",
+              "head": "${{ github.ref }}",
+              "commit_message": "Automatically merging successful build"
+            }
