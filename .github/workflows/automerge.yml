@@ -33,3 +33,18 @@ jobs:
               "head": "${{ github.ref }}",
               "commit_message": "Automatically merging successful build"
             }
+
+      - name: Merge into other branches
+        if: ${{ success() }}
+        run: |
+          git checkout main
+          git merge "${{ github.ref }}"
+          git push origin main
+
+          git checkout minhal
+          git merge "${{ github.ref }}"
+          git push origin minhal
+
+          git checkout hammas
+          git merge "${{ github.ref }}"
+          git push origin hammas
