@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1> Key Metrics measured during Training</h1>
+    <div>
+        <canvas id="metricsChart" width="500" height="500"></canvas>
+    </div>
+
+    <script>
+        const ct = document.getElementById('metricsChart').getContext('2d');
+
+    var metricsCh = new Chart(ct, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: 'Mean Square Error',
+                data: {{ meanSquareError | safe }},
+                showLine: true,
+                borderWidth: 1,
+                lineWidth: 5,
+                strokeColor: "rgb(255, 0, 0)"
+            },
+            {
+                label: 'Mean Absolute Error',
+                data: {{ meanAbsoluteError | safe }},
+                showLine: true,
+                borderWidth: 1,
+                lineWidth: 5,
+                strokeColor: "rgb(0, 255, 0)"
+            },
+            {
+                label: 'Cosine Proximity',
+                data: {{ cosine | safe }},
+                showLine: true,
+                borderWidth: 1,
+                lineWidth: 5,
+                strokeColor: "rgb(0, 0, 255)"
+            }
+            ]
+        },
+        options: {
+            responsive: false,
+            elements: {
+                    point:{
+                        radius: 0
+                    }
+                }
+        }
+            
+        });
+    </script>
+
+    <h1> Spy Price Chart</h1>
+    <div>
+        <canvas id="myChart" width="900" height="600"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+
+    var lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: 'SPY ACTUAL PRICE',
+                data: {{ values | safe }},
+                showLine: true,
+                borderWidth: 1,
+                strokeColor: "rgb(255, 0, 0)"
+            },
+            {
+                label: 'SPY PREDICTED PRICE',
+                data: {{ predicted | safe }},
+                showLine: true,
+                borderWidth: 1,
+                lineWidth: 5,
+                strokeColor: "rgb(255, 255, 0)"
+            }
+            ]
+        },
+        options: {
+            responsive: false,
+            elements: {
+                    point:{
+                        radius: 0
+                    }
+                }
+        }
+            
+        });
+    </script>
+    <h1>Next Day Prediction: {{ nextPrediction }}</h1>
+</body>
+</html>
+
