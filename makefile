@@ -7,4 +7,4 @@ format:
 
 lint:
 	echo "Pylint finished"
-	#pylint --fail-under=-1 Parser/parser.py
+	
