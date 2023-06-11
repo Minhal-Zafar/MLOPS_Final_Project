@@ -25,5 +25,3 @@ jobs:
         python-version: 3.8.16
     - name: checkout repo
       uses: actions/checkout@v2
-    - name: build application
-      run: make build
