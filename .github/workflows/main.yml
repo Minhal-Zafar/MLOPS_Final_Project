@@ -16,45 +16,14 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v2
+  
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8.16
+      uses: actions/setup-python@v1
       with:
-        python-version: 3.9  # Specify the Python version you want to use
-
-    - name: Determine changed Python files
-      id: changed-files
-      run: |
-        LATEST_COMMIT=$(git log -1 --format='%H')
-        PREVIOUS_COMMIT=$(git log -2 --skip=1 --format='%H')
-        CHANGED_FILES=$(git diff --name-only $PREVIOUS_COMMIT $LATEST_COMMIT --diff-filter=d -- "*/.py")
-        echo "::set-output name=changed_files::${CHANGED_FILES}"
-    - name: Get all changed .py   
-      id: changed-files-excluded
-      uses: tj-actions/changed-files@v36
-      with:
-          files: |
-            NAaaS-M-Dops/NAaaS/Topic\ Extraction_mlflow_test
-            **.py           
-    
-    - name: Run tests and coverage
-      if: steps.changed-files-excluded.outputs.any_changed == 'true'
-      run: echo "Starting now"
-    
-    - name: Install dependencies
-      if: steps.changed-files-excluded.outputs.any_changed == 'true'
-      run: |
-        cd NAaaS/Topic\ Extraction_mlflow_test/
-        make install
-    
-    - name: Lint
-      if: steps.changed-files-excluded.outputs.any_changed == 'true'
-      run: |
-        cd NAaaS/Topic\ Extraction_mlflow_test/
-        make lint
-    
-    - name: Test
-      if: steps.changed-files-excluded.outputs.any_changed == 'true'
-      run: |
-        cd NAaaS/Topic\ Extraction_mlflow_test/
-        make test
+        python-version: 3.8.16
+    - name: checkout repo
+      uses: actions/checkout@v2
+    - name: build application
+      run: make build
