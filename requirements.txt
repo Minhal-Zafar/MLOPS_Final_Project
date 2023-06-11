@@ -1,0 +1,10 @@
+pandas_datareader
+pandas
+yfinance
+datetime
+flask
+numpy
+scikit-learn
+tensorflow
+flake8
+bandit
